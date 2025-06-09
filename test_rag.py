@@ -1,11 +1,11 @@
 from query_data import query_rag
-from langchain_community.llms.ollama import Ollama
+from langchain_ollama import OllamaLLM
 
 EVAL_PROMPT = """
 Expected Response: {expected_response}
 Actual Response: {actual_response}
 ---
-(Answer with 'true' or 'false') Does the actual response match the expected response? 
+(Answer with 'true' or 'false') Does the actual response match the expected response?
 """
 
 
@@ -29,7 +29,7 @@ def query_and_validate(question: str, expected_response: str):
         expected_response=expected_response, actual_response=response_text
     )
 
-    model = Ollama(model="mistral")
+    model = OllamaLLM(model="llama3.1:8b")
     evaluation_results_str = model.invoke(prompt)
     evaluation_results_str_cleaned = evaluation_results_str.strip().lower()
 
